@@ -1,0 +1,7 @@
+.vscode
+*.png
+*.jpeg
+build-opencv.sh
+build-tesseract.sh
+lib-sources
+lib
