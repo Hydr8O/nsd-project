@@ -2,21 +2,27 @@ SOURCE = source
 
 .PHONY: clean
 
-main: main.o ImagePreprocessor.o EdgeDetector.o ContourDetector.o
-	g++ main.o ImagePreprocessor.o EdgeDetector.o ContourDetector.o -L./lib/opencv/lib -lopencv_core -lopencv_imgcodecs -lopencv_imgproc -o main
+SOURCE_FILE_NAME=document_warper
+TARGET = $(SOURCE_FILE_NAME)$(shell python3-config --extension-suffix)
+
+TARGET: main.o ImagePreprocessor.o EdgeDetector.o ContourDetector.o utils.o
+	g++ main.o ImagePreprocessor.o EdgeDetector.o ContourDetector.o utils.o -L./lib/opencv/lib -I./lib/opencv/include/opencv4 -I$(shell python3 -m pybind11 --includes) $(shell python3-config --includes) -shared -fPIC -lopencv_core -lopencv_imgcodecs -lopencv_imgproc -o $(SOURCE_FILE_NAME)$(shell python3-config --extension-suffix) -O3
 
 
 main.o: main.cpp
-	g++ -std=c++11 -c main.cpp -I./lib/opencv/include/opencv4 -o main.o
+	g++ -c -fPIC main.cpp -I./lib/opencv/include/opencv4 -I$(shell python3 -m pybind11 --includes) $(shell python3-config --includes) -o main.o
 
 ImagePreprocessor.o: ${SOURCE}/ImagePreprocessor.cpp
-	g++ -c ${SOURCE}/ImagePreprocessor.cpp -I./lib/opencv/include/opencv4 -o ImagePreprocessor.o
+	g++ -c -fPIC ${SOURCE}/ImagePreprocessor.cpp -I./lib/opencv/include/opencv4 -I./lib/opencv/include/opencv4 -I$(shell python3 -m pybind11 --includes) $(shell python3-config --includes) -o ImagePreprocessor.o
 
 EdgeDetector.o: ${SOURCE}/EdgeDetector.cpp
-	g++ -c ${SOURCE}/EdgeDetector.cpp -I./lib/opencv/include/opencv4 -o EdgeDetector.o
+	g++ -c -fPIC ${SOURCE}/EdgeDetector.cpp -I./lib/opencv/include/opencv4 -o EdgeDetector.o
 
 ContourDetector.o: ${SOURCE}/ContourDetector.cpp
-	g++ -c ${SOURCE}/ContourDetector.cpp -I./lib/opencv/include/opencv4 -o ContourDetector.o
+	g++ -c -fPIC ${SOURCE}/ContourDetector.cpp -I./lib/opencv/include/opencv4 -o ContourDetector.o
+
+utils.o: ${SOURCE}/utils.cpp
+	g++ -c -fPIC ${SOURCE}/utils.cpp -I./lib/opencv/include/opencv4 -I./lib/opencv/include/opencv4 -I$(shell python3 -m pybind11 --includes) $(shell python3-config --includes) -o utils.o
 
 clean:
 	rm -rf *.o *.so
