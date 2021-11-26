@@ -1,15 +1,16 @@
 #include <opencv2/core/mat.hpp>
 #include <pybind11/numpy.h>
+#include "../headers/Image.hpp"
 
 namespace py = pybind11;
 
 #pragma once
 class ImagePreprocessor {
     public:
-        ImagePreprocessor(std::string imagePath);
-        py::array get_gray_image();
-        cv::Mat get_blurred_image();
+        ImagePreprocessor(Image image);
+        Image get_gray_image();
+        Image get_blurred_image();
     private:
-        cv::Mat m_grayImage;
-        cv::Mat m_blurredImage;
+        Image m_grayImage;
+        Image m_blurredImage;
 };

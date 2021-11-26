@@ -1,6 +1,8 @@
 import numpy as np
 
-from document_warper import ImagePreprocessor
+from document_warper import Image, ImagePreprocessor
 
-preprocessor = ImagePreprocessor("test.jpg")
-print(np.array_equal(preprocessor.get_gray_image(), preprocessor.get_gray_image()))
+image = Image("test.jpg")
+
+preprocessor = ImagePreprocessor(image)
+print(np.array_equal(preprocessor.get_gray_image().get_array(), preprocessor.get_gray_image().get_array()))

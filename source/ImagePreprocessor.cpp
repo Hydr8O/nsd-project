@@ -4,23 +4,23 @@
 #include <pybind11/numpy.h>
 #include "../headers/ImagePreprocessor.hpp"
 #include "../headers/utils.hpp"
+#include "../headers/Image.hpp"
 
 namespace py = pybind11;
 
 
-ImagePreprocessor::ImagePreprocessor(std::string imagePath) {
-    cv::Mat image = cv::imread(imagePath);
+ImagePreprocessor::ImagePreprocessor(Image image) {
     cv::Mat imageGray, imageBlur;
-    cv::cvtColor(image, imageGray, cv::COLOR_BGR2GRAY);
+    cv::cvtColor(image.get_matrix(), imageGray, cv::COLOR_BGR2GRAY);
     cv::GaussianBlur(imageGray, imageBlur, cv::Size(15, 15), 0, 0);
-    ImagePreprocessor::m_grayImage = imageGray;
-    ImagePreprocessor::m_blurredImage = imageBlur;
+    ImagePreprocessor::m_grayImage = Image(imageGray);
+    ImagePreprocessor::m_blurredImage = Image(imageBlur);
 }
 
-py::array ImagePreprocessor::get_gray_image() {
-    return convertMatToPyArray(m_grayImage);
+Image ImagePreprocessor::get_gray_image() {
+    return ImagePreprocessor::m_grayImage;
 }
 
-cv::Mat ImagePreprocessor::get_blurred_image() {
+Image ImagePreprocessor::get_blurred_image() {
     return ImagePreprocessor::m_blurredImage;
 }

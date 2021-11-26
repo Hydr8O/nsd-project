@@ -3,27 +3,28 @@
 #include <opencv2/imgproc.hpp>
 
 #include "../headers/ContourDetector.hpp"
+#include "../headers/Image.hpp"
 
-ContourDetector::ContourDetector(cv::Mat image, cv::Mat imageEdge) {
-    cv::Mat imageContour = image.clone();
+ContourDetector::ContourDetector(Image image, Image imageEdge) {
+    cv::Mat imageContour = image.get_matrix().clone();
     cv::Mat imageWarp;
     std::vector<std::vector<cv::Point>> contours;
     std::vector<cv::Point> cornerPoints;
     std::vector<cv::Vec4i> hierarchy;
-    cv::findContours(imageEdge, contours, hierarchy, cv::RETR_EXTERNAL, cv::CHAIN_APPROX_SIMPLE);
+    cv::findContours(imageEdge.get_matrix(), contours, hierarchy, cv::RETR_EXTERNAL, cv::CHAIN_APPROX_SIMPLE);
     cornerPoints = ContourDetector::find_corner_points(contours);
     cornerPoints = ContourDetector::reorder_points(cornerPoints);
     cv::Point2f src[4] = {cornerPoints[0], cornerPoints[1], cornerPoints[2], cornerPoints[3]};
     float w = 1680.0f;
     float h = 2384.0f;
     cv::Point2f dst[4] = {{0.0f, 0.0f}, {w, 0.0f}, {0.0f, h}, {w, h}};
-    cv::Mat matrix = cv::getPerspectiveTransform(src, dst);
-    cv::warpPerspective(image, imageWarp, matrix, cv::Point(w, h));
+    cv::Mat warpMatrix = cv::getPerspectiveTransform(src, dst);
+    cv::warpPerspective(image.get_matrix(), imageWarp, warpMatrix, cv::Point(w, h));
     ContourDetector::draw_corner_points(imageContour, cornerPoints);
-    ContourDetector::m_imageContour = imageWarp;
+    ContourDetector::m_imageContour = Image(imageWarp);
 }
 
-cv::Mat ContourDetector::get_contours_image() {
+Image ContourDetector::get_contours_image() {
     return ContourDetector::m_imageContour;
 }
 
