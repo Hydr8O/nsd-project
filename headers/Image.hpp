@@ -11,6 +11,7 @@ class Image {
         Image();
         cv::Mat get_matrix();
         py::array get_array();
+        void write(std::string filename);
 
     private:
         cv::Mat m_matrix;

@@ -17,6 +17,8 @@ ImagePreprocessor::ImagePreprocessor(Image image) {
     ImagePreprocessor::m_blurredImage = Image(imageBlur);
 }
 
+ImagePreprocessor::ImagePreprocessor() {};
+
 Image ImagePreprocessor::get_gray_image() {
     return ImagePreprocessor::m_grayImage;
 }

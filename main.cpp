@@ -3,8 +3,9 @@
 #include <iostream>
 #include "headers/ImagePreprocessor.hpp"
 #include "headers/EdgeDetector.hpp"
-#include "headers/ContourDetector.hpp"
+#include "headers/CornerPointExtractor.hpp"
 #include "headers/Image.hpp"
+#include "headers/DocumentWarper.hpp"
 namespace py = pybind11;
 
 
@@ -18,7 +19,16 @@ PYBIND11_MODULE(document_warper, m) {
     py::class_<Image>(m, "Image")
         .def(py::init<std::string>())
         .def("get_matrix", &Image::get_matrix)
-        .def("get_array", &Image::get_array);
+        .def("get_array", &Image::get_array)
+        .def("write", &Image::write);
+
+    py::class_<DocumentWarper>(m, "DocumentWarper")
+        .def(py::init<Image>())
+        .def("get_gray_image", &DocumentWarper::get_gray_image)
+        .def("get_blurred_image", &DocumentWarper::get_blurred_image)
+        .def("get_edge_image", &DocumentWarper::get_edge_image)
+        .def("get_corner_point_image", &DocumentWarper::get_corner_point_image)
+        .def("get_warped_image", &DocumentWarper::get_warped_image);
 }
 
 // int main(int argc, char** argv) { 

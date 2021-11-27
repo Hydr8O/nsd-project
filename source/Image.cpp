@@ -20,6 +20,10 @@ Image::Image(cv::Mat matrix) {
     Image::m_pyArray = convertMatToPyArray(matrix);
 }
 
+void Image::write(std::string filename) {
+    cv::imwrite(filename, m_matrix);
+}
+
 cv::Mat Image::get_matrix() {
     return Image::m_matrix;
 }

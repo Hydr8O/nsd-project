@@ -5,6 +5,7 @@
 class EdgeDetector {
     public:
         EdgeDetector(Image image);
+        EdgeDetector();
         Image get_edge_image();
     private:
         Image m_imageEdge;

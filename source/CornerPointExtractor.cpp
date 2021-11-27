@@ -2,39 +2,40 @@
 #include <opencv2/core/mat.hpp>
 #include <opencv2/imgproc.hpp>
 
-#include "../headers/ContourDetector.hpp"
+#include "../headers/CornerPointExtractor.hpp"
 #include "../headers/Image.hpp"
 
-ContourDetector::ContourDetector(Image image, Image imageEdge) {
-    cv::Mat imageContour = image.get_matrix().clone();
+CornerPointExtractor::CornerPointExtractor(Image image, Image imageEdge) {
+    cv::Mat cornerPointImage = image.get_matrix().clone();
     cv::Mat imageWarp;
     std::vector<std::vector<cv::Point>> contours;
     std::vector<cv::Point> cornerPoints;
     std::vector<cv::Vec4i> hierarchy;
     cv::findContours(imageEdge.get_matrix(), contours, hierarchy, cv::RETR_EXTERNAL, cv::CHAIN_APPROX_SIMPLE);
-    cornerPoints = ContourDetector::find_corner_points(contours);
-    cornerPoints = ContourDetector::reorder_points(cornerPoints);
-    cv::Point2f src[4] = {cornerPoints[0], cornerPoints[1], cornerPoints[2], cornerPoints[3]};
-    float w = 1680.0f;
-    float h = 2384.0f;
-    cv::Point2f dst[4] = {{0.0f, 0.0f}, {w, 0.0f}, {0.0f, h}, {w, h}};
-    cv::Mat warpMatrix = cv::getPerspectiveTransform(src, dst);
-    cv::warpPerspective(image.get_matrix(), imageWarp, warpMatrix, cv::Point(w, h));
-    ContourDetector::draw_corner_points(imageContour, cornerPoints);
-    ContourDetector::m_imageContour = Image(imageWarp);
+    cornerPoints = CornerPointExtractor::find_corner_points(contours);
+    cornerPoints = CornerPointExtractor::reorder_points(cornerPoints);
+    CornerPointExtractor::draw_corner_points(cornerPointImage, cornerPoints);
+    CornerPointExtractor::m_cornerPointImage = Image(cornerPointImage);
+    CornerPointExtractor::m_cornerPoints = cornerPoints;
 }
 
-Image ContourDetector::get_contours_image() {
-    return ContourDetector::m_imageContour;
+CornerPointExtractor::CornerPointExtractor() {};
+
+Image CornerPointExtractor::get_corner_point_image() {
+    return CornerPointExtractor::m_cornerPointImage;
 }
 
-void ContourDetector::draw_corner_points(cv::Mat image, std::vector<cv::Point> cornerPoints) {
+std::vector<cv::Point> CornerPointExtractor::get_corner_points() {
+    return CornerPointExtractor::m_cornerPoints;
+}
+
+void CornerPointExtractor::draw_corner_points(cv::Mat image, std::vector<cv::Point> cornerPoints) {
     for (int i = 0; i < cornerPoints.size(); i++) {
         cv::circle(image, cornerPoints[i], 30, cv::Scalar(255, 0, 255), cv::FILLED);
     }
 }
 
-std::vector<cv::Point> ContourDetector::find_corner_points(std::vector<std::vector<cv::Point>> contours) {
+std::vector<cv::Point> CornerPointExtractor::find_corner_points(std::vector<std::vector<cv::Point>> contours) {
     std::vector<cv::Point> cornerPoints;
     float maxArea = 0;
     for (int i = 0; i < contours.size(); i++) {
@@ -50,7 +51,7 @@ std::vector<cv::Point> ContourDetector::find_corner_points(std::vector<std::vect
     return cornerPoints;
 }
 
-std::vector<cv::Point> ContourDetector::reorder_points(std::vector<cv::Point> points) {
+std::vector<cv::Point> CornerPointExtractor::reorder_points(std::vector<cv::Point> points) {
     std::vector<cv::Point> reorderedPoints(points.size());
     std::vector<float> tempPointsSum(points.size()), tempPointsSub(points.size());
 

@@ -8,6 +8,7 @@ namespace py = pybind11;
 class ImagePreprocessor {
     public:
         ImagePreprocessor(Image image);
+        ImagePreprocessor();
         Image get_gray_image();
         Image get_blurred_image();
     private:

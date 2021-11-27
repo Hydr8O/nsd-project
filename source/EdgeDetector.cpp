@@ -9,9 +9,10 @@ EdgeDetector::EdgeDetector(Image image) {
     cv::Canny(image.get_matrix(), imageCanny, 25, 75);
     cv::Mat kernel = cv::getStructuringElement(cv::MORPH_ELLIPSE, cv::Size(3, 3));
     cv::dilate(imageCanny, imageEdge, kernel);
-    // cv::erode(imageEdge, imageEdge, kernel);
     EdgeDetector::m_imageEdge = Image(imageEdge);
 }
+
+EdgeDetector::EdgeDetector() {};
 
 Image EdgeDetector::get_edge_image() {
     return EdgeDetector::m_imageEdge;
