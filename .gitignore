@@ -6,3 +6,4 @@ build-opencv.sh
 build-tesseract.sh
 lib-sources
 lib
+__pycache__
