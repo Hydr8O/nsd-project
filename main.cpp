@@ -6,6 +6,7 @@
 #include "headers/CornerPointExtractor.hpp"
 #include "headers/Image.hpp"
 #include "headers/DocumentWarper.hpp"
+#include "headers/TextExtractor.hpp"
 namespace py = pybind11;
 
 
@@ -29,6 +30,10 @@ PYBIND11_MODULE(document_warper, m) {
         .def("get_edge_image", &DocumentWarper::get_edge_image)
         .def("get_corner_point_image", &DocumentWarper::get_corner_point_image)
         .def("get_warped_image", &DocumentWarper::get_warped_image);
+
+    py::class_<TextExtractor>(m, "TextExtractor")
+        .def(py::init<>())
+        .def("extract_text", &TextExtractor::extract_text);
 }
 
 // int main(int argc, char** argv) { 

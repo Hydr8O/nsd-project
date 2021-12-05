@@ -3,13 +3,16 @@
 #include "../headers/EdgeDetector.hpp"
 #include "../headers/CornerPointExtractor.hpp"
 #include "../headers/Image.hpp"
+#include <iostream>
 #include "../headers/utils.hpp"
 
 DocumentWarper::DocumentWarper(Image image) {
     DocumentWarper::m_preprocessor = ImagePreprocessor(image);
     DocumentWarper::m_edgeDetector = EdgeDetector(m_preprocessor.get_blurred_image());
     DocumentWarper::m_cornerPointExtractor = CornerPointExtractor(image, m_edgeDetector.get_edge_image());
+    std::cout << "Start warping!" << std::endl;
     DocumentWarper::m_warpedImage = warp_image(image, m_cornerPointExtractor.get_corner_points());
+    std::cout << "Finish warping!" << std::endl;
 }
 
 Image DocumentWarper::get_gray_image() {

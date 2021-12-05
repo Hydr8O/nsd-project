@@ -2,7 +2,7 @@ import numpy as np
 import json
 from json import JSONEncoder
 from pathlib import Path
-from document_warper import DocumentWarper, Image
+from document_warper import DocumentWarper, Image, TextExtractor
 
 TEST_DATA = Path('test_data')
 
@@ -61,3 +61,9 @@ def test_warp():
     test_corner_point_data = gray_image.get_array()
     warp_data = read_json(TEST_DATA / 'serialized_warp_image.json')
     assert np.array_equal(test_corner_point_data, warp_data) == True
+
+image = Image('test_hello.jpg')
+warped_image = DocumentWarper(image).get_warped_image()
+warped_image.write('warped_ocr.jpg')
+extractor = TextExtractor()
+extractor.extract_text(warped_image)
