@@ -12,11 +12,11 @@ chmod u+x build.sh
 
 ### Image
 - constructor Image(path_to_image) - reads an image from path_to_image
-  ```
+  ```python
   image = Image('image.jpg') 
   ```
 - write(path) - write an image to path
-  ```
+  ```python
   image = Image('image.jpg')
   image.write('image_copy.jpg')
   ```
