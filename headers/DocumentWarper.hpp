@@ -10,6 +10,7 @@ class DocumentWarper {
         Image get_blurred_image();
         Image get_edge_image();
         Image get_corner_point_image();
+        py::list get_corner_point_array();
         Image get_warped_image();
 
 

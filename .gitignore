@@ -7,3 +7,5 @@ build-tesseract.sh
 lib-sources
 lib
 __pycache__
+.pytest_cache
+test_full

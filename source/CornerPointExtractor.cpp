@@ -1,6 +1,7 @@
 #include <iostream>
 #include <opencv2/core/mat.hpp>
 #include <opencv2/imgproc.hpp>
+#include <pybind11/stl.h>
 
 #include "../headers/CornerPointExtractor.hpp"
 #include "../headers/Image.hpp"
@@ -20,6 +21,17 @@ CornerPointExtractor::CornerPointExtractor(Image image, Image imageEdge) {
 }
 
 CornerPointExtractor::CornerPointExtractor() {};
+
+py::list CornerPointExtractor::get_corner_point_array() {
+    std::vector<py::tuple> tuplePoints(m_cornerPoints.size());
+
+    for (int i = 0; i < m_cornerPoints.size(); i++) {
+        tuplePoints[i] = py::make_tuple(m_cornerPoints[i].x, m_cornerPoints[i].y);
+    }
+    py::list listPoints = py::cast(tuplePoints);
+    return listPoints;
+
+}
 
 Image CornerPointExtractor::get_corner_point_image() {
     return CornerPointExtractor::m_cornerPointImage;

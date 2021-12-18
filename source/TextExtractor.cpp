@@ -7,6 +7,9 @@
 #include "../headers/Image.hpp"
 #include "../headers/utils.hpp"
 
+float const FINAL_WIDTH = 1680.0f;
+float const FINAL_HEIGHT = 2384.0f;
+
 TextExtractor::TextExtractor() {
     TextExtractor::m_tesseractApi = new tesseract::TessBaseAPI();
     // Initialize tesseract-ocr with English, without specifying tessdata path
@@ -21,9 +24,9 @@ TextExtractor::~TextExtractor() {
     delete TextExtractor::m_tesseractApi;
 }
 
-void TextExtractor::extract_text(Image image) {
-    float w = 1680.0f;
-    float h = 2384.0f;
+std::string TextExtractor::extract_text(Image image) {
+    float w = FINAL_WIDTH;
+    float h = FINAL_HEIGHT;
     cv::Rect cropArea(100, 100, w - 2 * 100, h - 2 * 100);
     cv::Mat matImage = image.get_matrix();
     cv::Mat binaryMatrix = binarise(matImage);
@@ -31,7 +34,8 @@ void TextExtractor::extract_text(Image image) {
     Pix *leptonica_image = matToPix(&binaryMatrix);
     TextExtractor::m_tesseractApi->SetImage(leptonica_image);
     char *outText = TextExtractor::m_tesseractApi->GetUTF8Text();
-    printf("OCR output:\n%s", outText);
+    std::string result = outText;
     delete [] outText;
     pixDestroy(&leptonica_image);
+    return result;
 }

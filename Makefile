@@ -2,7 +2,7 @@ SOURCE = source
 
 .PHONY: clean
 
-SOURCE_FILE_NAME=document_warper
+SOURCE_FILE_NAME=text_extractor
 TESSERACT_INCLUDES=-I./lib/leptonica/include -I./lib/tesseract/include
 LIBS=-L./lib/opencv/lib -L./lib/tesseract/lib -L./lib/leptonica/lib
 SHARED=-lopencv_core -lopencv_imgcodecs -lopencv_imgproc -ltesseract -llept

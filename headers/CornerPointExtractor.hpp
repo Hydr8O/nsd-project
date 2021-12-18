@@ -1,12 +1,16 @@
 #include <opencv2/core/mat.hpp>
+#include <pybind11/pybind11.h>
+#include <pybind11/numpy.h>
+#include <pybind11/stl.h>
 #include "../headers/Image.hpp"
+namespace py = pybind11;
 
 #pragma once
 class CornerPointExtractor {
     public:
         CornerPointExtractor(Image image, Image imageEdges);
         CornerPointExtractor();
-        Image get_contours_image();
+        py::list get_corner_point_array();
         std::vector<cv::Point> find_corner_points(std::vector<std::vector<cv::Point>> contours);
         int find_largest_contour(std::vector<std::vector<cv::Point>> contours);
         std::vector<cv::Point> reorder_points(std::vector<cv::Point> points);

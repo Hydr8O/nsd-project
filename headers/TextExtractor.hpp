@@ -8,7 +8,7 @@ class TextExtractor {
     public:
         TextExtractor();
         ~TextExtractor();
-        void extract_text(Image image);
+        std::string extract_text(Image image);
     private:
         tesseract::TessBaseAPI *m_tesseractApi;
 };
