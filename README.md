@@ -4,8 +4,8 @@
 
 To download and build required libraries from source:
 ```
-chmod u+x build-libraries.sh
-./build-libraries.sh
+chmod u+x build-libs.sh
+./build-libs.sh
 ```
 
 To build text extractor:
