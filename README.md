@@ -2,10 +2,15 @@
 
 ## Installation
 
-Installation is done by running the script build.sh
+To download and build required libraries from source:
 ```
-chmod u+x build.sh
-./build.sh
+chmod u+x build-libraries.sh
+./build-libraries.sh
+```
+
+To build text extractor:
+```
+make
 ```
 
 ## API
