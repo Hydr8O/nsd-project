@@ -91,7 +91,7 @@ Implements the whole pipeline. Also has get_gray_image(), get_blurred_image(), g
  ```python
   extractor = TextExtractor()
   ```
--extract_text(Image)
+- extract_text(Image)
  ```python
   image = Image('image.jpg')
   extractor = TextExtractor()
