@@ -37,4 +37,4 @@ Image.o: ${SOURCE}/Image.cpp
 	g++ -c -fPIC ${SOURCE}/Image.cpp -I./lib/opencv/include/opencv4 ${PYBIND_INCLUDEDS} ${TESSERACT_INCLUDES} -o Image.o
 
 clean:
-	rm -rf *.o *.so
+	rm -rf *.o *.so *.jpg

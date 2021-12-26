@@ -1,0 +1,17 @@
+from text_extractor import Image, TextExtractor, DocumentWarper
+image = Image('testing/test_ocr.jpg')
+warper = DocumentWarper(image)
+gray_image = warper.get_gray_image()
+blur_image = warper.get_blurred_image()
+edge_image = warper.get_edge_image()
+corner_image = warper.get_corner_point_image()
+warp_image = warper.get_warped_image()
+
+gray_image.write('gray.jpg')
+blur_image.write('blur.jpg')
+edge_image.write('edge.jpg')
+corner_image.write('corner.jpg')
+warp_image.write('warp.jpg')
+extractor = TextExtractor()
+text = extractor.extract_text(warp_image)
+print(text)
