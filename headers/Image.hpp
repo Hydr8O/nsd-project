@@ -9,6 +9,9 @@ class Image {
         Image(std::string imagePath);
         Image(cv::Mat matrix);
         Image();
+        Image(Image const & );
+        Image & operator=(Image const & );
+        ~Image() = default;
         cv::Mat get_matrix();
         py::array get_array();
         void write(std::string filename);

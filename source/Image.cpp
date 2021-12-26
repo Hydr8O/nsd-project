@@ -16,6 +16,23 @@ Image::Image(std::string imagePath) {
 
 Image::Image() {}
 
+Image::Image(Image const &other) {
+    Image::m_matrix = other.m_matrix.clone();
+
+    auto buffer = other.m_pyArray.request(); 
+    Image::m_pyArray = py::array(buffer);
+}
+
+Image & Image::operator=(Image const &other) {
+    if (this == &other) { return *this; }
+
+    Image::m_matrix = other.m_matrix.clone();
+
+    auto buffer = other.m_pyArray.request(); 
+    Image::m_pyArray = py::array(buffer);
+    return *this;
+}
+
 Image::Image(cv::Mat matrix) {
     Image::m_matrix = matrix;
     Image::m_pyArray = convertMatToPyArray(matrix);
