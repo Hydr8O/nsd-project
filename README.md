@@ -13,6 +13,11 @@ To build text extractor:
 make
 ```
 
+## Testing
+```
+make test
+```
+
 ## API
 
 ### Image
@@ -81,3 +86,14 @@ Implements the whole pipeline. Also has get_gray_image(), get_blurred_image(), g
   warped_image = warper.get_warped_image()
   ``` 
  
+### TextExtractor()
+- constructor
+ ```python
+  extractor = TextExtractor()
+  ```
+-extract_text(Image)
+ ```python
+  image = Image('image.jpg')
+  extractor = TextExtractor()
+  text = extractor.extract_text(image)
+  ```
