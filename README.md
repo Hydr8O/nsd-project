@@ -76,7 +76,7 @@ make test
   
 ### DocumentWarper
 Implements the whole pipeline. Also has get_gray_image(), get_blurred_image(), get_edge_image(), get_corner_point_image() methods.
-- constructor DocumentWarper(image)
+- constructor DocumentWarper(Image)
   ```python
   image = Image('image.jpg')
   warper = DocumentWarper(image)
@@ -86,8 +86,8 @@ Implements the whole pipeline. Also has get_gray_image(), get_blurred_image(), g
   warped_image = warper.get_warped_image()
   ``` 
  
-### TextExtractor()
-- constructor
+### TextExtractor
+- constructor TextExtractor(Image)
  ```python
   extractor = TextExtractor()
   ```
