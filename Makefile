@@ -1,6 +1,6 @@
 SOURCE = source
 
-.PHONY: clean
+.PHONY: clean, test
 
 SOURCE_FILE_NAME=text_extractor
 TESSERACT_INCLUDES=-I./lib/leptonica/include -I./lib/tesseract/include
@@ -38,3 +38,6 @@ Image.o: ${SOURCE}/Image.cpp
 
 clean:
 	rm -rf *.o *.so *.jpg
+
+test:
+	cd testing && pytest . && cd -
